@@ -1,9 +1,15 @@
+"use client";
 import React from "react";
 import Navbar from "./navbar/Navbar";
 import ChatAside from "./note-aside/NoteAside";
 import ChatMain from "./note-main/NoteMain";
+import { useSearchParams } from "next/navigation";
 
 export default function Chat() {
+    const searchParams = useSearchParams();
+    const pt = searchParams.get("pt");
+    const id = searchParams.get("id");
+
     return (
         <div
             className="main"
@@ -23,7 +29,7 @@ export default function Chat() {
                 }}
             >
                 <ChatAside />
-                <ChatMain />
+                <ChatMain pt={pt} id={id} />
             </div>
         </div>
     );

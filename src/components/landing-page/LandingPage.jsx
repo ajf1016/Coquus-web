@@ -11,7 +11,7 @@ export default function LandingPage() {
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Molestiae, dicta.
                 </p>
-                <Link href="/auth" className={styles.button}>
+                <Link href="/note" className={styles.button}>
                     Get Started
                 </Link>
             </div>
