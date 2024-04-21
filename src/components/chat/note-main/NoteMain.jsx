@@ -1,9 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./note-main.module.css";
+import NewNote from "./NewNote";
 
 export default function NoteMain() {
     const [mode, setMode] = useState("raw"); // Initial mode is "raw"
+    return <NewNote />;
     return (
         <div className={styles.main}>
             <div className={styles.top}>

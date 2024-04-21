@@ -9,6 +9,8 @@ export default function Chat() {
             className="main"
             style={{
                 height: "100vh",
+                position: "fixed",
+                width: "100%",
             }}
         >
             <Navbar />
