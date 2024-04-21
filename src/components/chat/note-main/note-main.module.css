@@ -1,0 +1,38 @@
+.main {
+    padding: 20px;
+    width: 100%;
+}
+.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.name {
+    font-size: 25px;
+}
+.modeButtons {
+    background-color: #fff;
+    border-radius: 50px;
+    padding: 10px 5px;
+}
+.modeButtons span {
+    background-color: #030637;
+    border-radius: 50px;
+    padding: 5px 15px;
+    font-size: 18px;
+    cursor: pointer;
+}
+.modeButtons span:first-child {
+    margin-right: 5px;
+}
+.content {
+    margin-top: 35px;
+}
+.text {
+    font-size: 18px;
+    font-family: sans-serif;
+    font-weight: 200;
+    letter-spacing: 1px;
+    line-height: 1.5rem;
+    width: 80%;
+}

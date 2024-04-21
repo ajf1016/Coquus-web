@@ -1,0 +1,44 @@
+.main {
+    background: #030637;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.335);
+    padding: 15px 0;
+}
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    color: #fff;
+}
+.logo {
+    font-size: 25px;
+    font-weight: 900;
+}
+.label {
+    /* background-color: rgb(96, 140, 96);
+    color: #007104; */
+    background-color: rgb(175, 126, 126);
+    color: #9d0000;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+.profile {
+    display: flex;
+    align-items: center;
+}
+.avatar {
+    margin-left: 10px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    color: #030637;
+    border-radius: 50%;
+}
+.name {
+    font-size: 18px;
+    font-weight: 500;
+}

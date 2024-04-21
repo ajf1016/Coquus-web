@@ -1,0 +1,41 @@
+.main {
+    background: #030637;
+    border-right: 1px solid rgba(255, 255, 255, 0.335);
+    width: 25%;
+    height: 100%;
+    padding: 20px;
+}
+.new_chat {
+    font-size: 20px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 6px;
+    background: #fff;
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+    cursor: pointer;
+    color: #030637;
+    text-align: center;
+}
+.chat_items {
+}
+.chat_item {
+    padding: 14px 20px;
+    border-radius: 6px;
+    background: #484eb0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.name {
+    font-size: 18px;
+    font-weight: 100;
+}
+.edit {
+    font-size: 15px;
+    font-weight: 500;
+}
