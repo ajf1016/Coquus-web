@@ -23,7 +23,7 @@ export default function NoteAside() {
     useEffect(() => fetchNotes, []);
     return (
         <div className={styles.main}>
-            <Link href={"/note?pt=new"} className={styles.new_chat}>
+            <Link href={"/note?pt=new&type=null"} className={styles.new_chat}>
                 Create New Note
             </Link>
             <div className={styles.chat_items}>

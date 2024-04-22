@@ -1,8 +1,19 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./new-note.module.css";
+import axios from "axios";
+import Link from "next/link";
 
 export default function NewNote() {
+    const recordAndUploadLAP = () => {
+        return;
+    };
+
+    const recordAndUploadESP = () => {
+        return;
+    };
+
     return (
         <div className={styles.main}>
             <div className={styles.content}>
@@ -46,7 +57,8 @@ export default function NewNote() {
                         Record and upload audio use your Laptop
                     </h3>
                 </div>
-                <div
+                <Link
+                    href={"/note?pt=new&type=upload-already-recorded-audio"}
                     className={styles.box}
                     style={{
                         width: "100%",
@@ -67,7 +79,7 @@ export default function NewNote() {
                     <h3 className={styles.description}>
                         Record note use your laptop/mobile
                     </h3>
-                </div>
+                </Link>
             </div>
         </div>
     );

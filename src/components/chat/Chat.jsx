@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./navbar/Navbar";
 import ChatAside from "./note-aside/NoteAside";
 import ChatMain from "./note-main/NoteMain";
@@ -7,8 +7,30 @@ import { useSearchParams } from "next/navigation";
 
 export default function Chat() {
     const searchParams = useSearchParams();
+    const [isOnline, setIsOnline] = useState(false);
     const pt = searchParams.get("pt");
     const id = searchParams.get("id");
+    const type = searchParams.get("type");
+
+    const connectToDevice = async () => {
+        try {
+            const response = await fetch("http://192.168.246.165:80/connect", {
+                method: "POST",
+            });
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+
+            // Handle success, if needed
+            console.log("Device Connected");
+            setIsOnline(true);
+        } catch (error) {
+            console.error("There was a problem with Connection:", error);
+            setIsOnline(false);
+        }
+    };
+    useEffect(() => connectToDevice, []);
 
     return (
         <div
@@ -19,7 +41,7 @@ export default function Chat() {
                 width: "100%",
             }}
         >
-            <Navbar />
+            <Navbar isOnline={isOnline} />
             <div
                 className="container"
                 style={{
@@ -29,7 +51,7 @@ export default function Chat() {
                 }}
             >
                 <ChatAside />
-                <ChatMain pt={pt} id={id} />
+                <ChatMain pt={pt} id={id} type={type} />
             </div>
         </div>
     );

@@ -9,6 +9,10 @@
 }
 .name {
     font-size: 25px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 400px;
 }
 .modeButtons {
     background-color: #fff;

@@ -34,6 +34,10 @@
 .name {
     font-size: 18px;
     font-weight: 100;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 200px;
 }
 .edit {
     font-size: 15px;
