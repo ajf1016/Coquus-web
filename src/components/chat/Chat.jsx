@@ -8,6 +8,7 @@ import { useSearchParams } from "next/navigation";
 export default function Chat() {
     const searchParams = useSearchParams();
     const [isOnline, setIsOnline] = useState(false);
+    const [refresh, setRefresh] = useState(Math.random());
     const pt = searchParams.get("pt");
     const id = searchParams.get("id");
     const type = searchParams.get("type");
@@ -41,7 +42,7 @@ export default function Chat() {
                 width: "100%",
             }}
         >
-            <Navbar isOnline={isOnline} />
+            <Navbar isOnline={isOnline} connectToDevice={connectToDevice} />
             <div
                 className="container"
                 style={{
@@ -50,8 +51,8 @@ export default function Chat() {
                     height: "100%",
                 }}
             >
-                <ChatAside />
-                <ChatMain pt={pt} id={id} type={type} />
+                <ChatAside setRefresh={setRefresh} />
+                <ChatMain pt={pt} id={id} type={type} refresh={refresh} />
             </div>
         </div>
     );

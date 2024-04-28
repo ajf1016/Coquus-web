@@ -7,9 +7,55 @@ import { redirect } from "next/navigation";
 
 export default function UploadAlreadyRecordedAudio() {
     const [file, setFile] = useState(null);
+    const [data, setData] = useState([]);
 
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
+    };
+
+    const uploadingStatus = async () => {
+        try {
+            const response = await fetch(
+                "http://192.168.246.165:80/uploading",
+                {
+                    method: "POST",
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+
+            // Handle success, if needed
+            console.log("Recording started successfully");
+        } catch (error) {
+            console.error(
+                "There was a problem with the fetch operation:",
+                error
+            );
+        }
+    };
+    const uploadedStatus = async () => {
+        try {
+            const response = await fetch("http://192.168.246.165:80/uploaded", {
+                method: "POST",
+            });
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+
+            // Handle success, if needed
+            console.log("Recording uploaded successfully");
+        } catch (error) {
+            console.error(
+                "There was a problem with the fetch operation:",
+                error
+            );
+        } finally {
+            window.location.href = "/note?pt=notes&id=" + data?.data?.id;
+            console.log(data.data.id);
+        }
     };
 
     const handleUpload = async () => {
@@ -19,6 +65,7 @@ export default function UploadAlreadyRecordedAudio() {
         formData.append("audio_file", file);
 
         try {
+            uploadingStatus();
             const response = await axios.post(
                 "http://127.0.0.1:8000/api/v1/notes/upload-audio/",
                 formData,
@@ -29,7 +76,9 @@ export default function UploadAlreadyRecordedAudio() {
                 }
             );
             console.log("File uploaded successfully:", response.data);
-            redirect("/note?pt=notes&id=" + response.data.data.id);
+            // redirect("/note?pt=notes&id=" + response.data.data.id);
+            setData(response.data);
+            uploadedStatus();
 
             // handle success
         } catch (error) {
@@ -71,9 +120,7 @@ export default function UploadAlreadyRecordedAudio() {
                             src={"icons/rec.svg"}
                         />
                     </div>
-                    <h3 className={styles.text}>
-                        Upload file from your device
-                    </h3>
+                    <h3 className={styles.text}>Upload file</h3>
                 </div>
                 <div
                     className={styles.box}

@@ -5,9 +5,10 @@ import NewNote from "./NewNote";
 import axios from "axios";
 import UploadAlreadyRecordedAudio from "./UploadAlreadyRecordedAudio";
 
-export default function NoteMain({ pt, id, type }) {
+export default function NoteMain({ pt, id, type, refresh }) {
     const [note, setNote] = useState([]);
     const [mode, setMode] = useState("summary");
+    const [isLoading, setLoading] = useState(true);
     const fetchNotes = () => {
         axios
             .get(
@@ -22,9 +23,15 @@ export default function NoteMain({ pt, id, type }) {
             })
             .catch((err) => {
                 console.log(err);
+            })
+            .finally((err) => {
+                setLoading(false);
             });
     };
-    useEffect(() => fetchNotes, [id]);
+    useEffect(() => {
+        setLoading(true);
+        fetchNotes();
+    }, [id]);
 
     const renderMain = () => {
         if (pt === "new" && type === "null") {
@@ -32,7 +39,19 @@ export default function NoteMain({ pt, id, type }) {
         } else if (pt === "new" && type === "upload-already-recorded-audio") {
             return <UploadAlreadyRecordedAudio />;
         } else {
-            return (
+            return isLoading ? (
+                <div
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        height: "100%",
+                        width: "100%",
+                    }}
+                >
+                    <h3 className={styles.name}>Loading..</h3>
+                </div>
+            ) : (
                 <div className={styles.main}>
                     <div className={styles.top}>
                         <h3 className={styles.name}>{note.summary}</h3>

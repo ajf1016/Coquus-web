@@ -31,6 +31,8 @@
 }
 .content {
     margin-top: 35px;
+    overflow-y: scroll;
+    max-height: 70vh;
 }
 .text {
     font-size: 18px;
