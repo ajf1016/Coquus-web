@@ -2,22 +2,14 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import styles from "./new-note.module.css";
-import axios from "axios";
 import Link from "next/link";
 
 export default function NewNote() {
-    const recordAndUploadLAP = () => {
-        return;
-    };
-
-    const recordAndUploadESP = () => {
-        return;
-    };
-
     return (
         <div className={styles.main}>
             <div className={styles.content}>
-                <div
+                <Link
+                    href={"/note?pt=new&type=record-and-upload-esp32"}
                     className={styles.box}
                     style={{
                         width: "49%",
@@ -36,8 +28,9 @@ export default function NewNote() {
                     <h3 className={styles.description}>
                         Record Audio use your ESP32 Device
                     </h3>
-                </div>
-                <div
+                </Link>
+                <Link
+                    href={"/note?pt=new&type=record-and-upload-pc"}
                     className={styles.box}
                     style={{
                         width: "49%",
@@ -56,7 +49,7 @@ export default function NewNote() {
                     <h3 className={styles.description}>
                         Record and upload audio use your Laptop
                     </h3>
-                </div>
+                </Link>
                 <Link
                     href={"/note?pt=new&type=upload-already-recorded-audio"}
                     className={styles.box}

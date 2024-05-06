@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import styles from "./new-note.module.css";
 import { noteConfig } from "../../../../apiConfig";
 
-export default function UploadAlreadyRecordedAudio() {
+export default function RecordAndUploadESP32() {
     const [file, setFile] = useState(null);
     const [data, setData] = useState([]);
 
@@ -92,7 +92,7 @@ export default function UploadAlreadyRecordedAudio() {
                         position: "relative",
                     }}
                 >
-                    <input
+                    {/* <input
                         type="file"
                         onChange={handleFileChange}
                         style={{
@@ -105,7 +105,7 @@ export default function UploadAlreadyRecordedAudio() {
                             height: "100%",
                             cursor: "pointer",
                         }}
-                    />
+                    /> */}
                     <div className={styles.icon}>
                         <Image
                             width={10}
@@ -115,7 +115,7 @@ export default function UploadAlreadyRecordedAudio() {
                             src={"icons/rec.svg"}
                         />
                     </div>
-                    <h3 className={styles.text}>Already uploaded file</h3>
+                    <h3 className={styles.text}>Start Recording</h3>
                 </div>
                 <div
                     className={styles.box}

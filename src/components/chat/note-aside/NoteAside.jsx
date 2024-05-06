@@ -2,15 +2,15 @@
 import React, { useEffect, useState } from "react";
 import styles from "./note-aside.module.css";
 import Link from "next/link";
-import axios from "axios";
+import { noteConfig } from "../../../../apiConfig";
 
 export default function NoteAside({ setRefresh }) {
     const [notes, setNote] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
     const fetchNotes = () => {
-        axios
-            .get("http://127.0.0.1:8000/api/v1/notes/get-all-notes/")
+        noteConfig
+            .get("get-all-notes/")
             .then((res) => {
                 console.log(res);
                 const { status_code, data } = res.data;

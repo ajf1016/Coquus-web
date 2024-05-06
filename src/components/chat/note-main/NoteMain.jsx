@@ -2,18 +2,19 @@
 import React, { useEffect, useState } from "react";
 import styles from "./note-main.module.css";
 import NewNote from "./NewNote";
-import axios from "axios";
-import UploadAlreadyRecordedAudio from "./UploadAlreadyRecordedAudio";
+import UploadAlreadyRecordedAudio from "./RecordAndUploadPC";
+import { noteConfig } from "../../../../apiConfig";
+import RecordAndUploadLaptop from "./RecordAndUploadPC";
+import RecordAndUploadPC from "./RecordAndUploadPC";
+import RecordAndUploadESP32 from "./RecordAndUploadESP32";
 
 export default function NoteMain({ pt, id, type, refresh }) {
     const [note, setNote] = useState([]);
     const [mode, setMode] = useState("summary");
     const [isLoading, setLoading] = useState(true);
     const fetchNotes = () => {
-        axios
-            .get(
-                "http://127.0.0.1:8000/api/v1/notes/get-single-note/" + id + "/"
-            )
+        noteConfig
+            .get("get-single-note/" + id + "/")
             .then((res) => {
                 console.log(res);
                 const { status_code, data } = res.data;
@@ -38,6 +39,10 @@ export default function NoteMain({ pt, id, type, refresh }) {
             return <NewNote />;
         } else if (pt === "new" && type === "upload-already-recorded-audio") {
             return <UploadAlreadyRecordedAudio />;
+        } else if (pt === "new" && type === "record-and-upload-esp32") {
+            return <RecordAndUploadESP32 />;
+        } else if (pt === "new" && type === "record-and-upload-pc") {
+            return <RecordAndUploadPC />;
         } else {
             return isLoading ? (
                 <div

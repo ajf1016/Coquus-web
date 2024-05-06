@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import styles from "./new-note.module.css";
 import { noteConfig } from "../../../../apiConfig";
 
-export default function UploadAlreadyRecordedAudio() {
+export default function RecordAndUploadPC() {
     const [file, setFile] = useState(null);
     const [data, setData] = useState([]);
 
@@ -85,7 +85,7 @@ export default function UploadAlreadyRecordedAudio() {
     return (
         <div className={styles.main}>
             <div className={styles.content}>
-                <div
+                {/* <div
                     className={styles.box}
                     style={{
                         width: "49%",
@@ -115,12 +115,12 @@ export default function UploadAlreadyRecordedAudio() {
                             src={"icons/rec.svg"}
                         />
                     </div>
-                    <h3 className={styles.text}>Already uploaded file</h3>
-                </div>
+                    <h3 className={styles.text}>Upload file</h3>
+                </div> */}
                 <div
                     className={styles.box}
                     style={{
-                        width: "49%",
+                        width: "100%",
                     }}
                     onClick={handleUpload}
                 >

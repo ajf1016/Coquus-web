@@ -1,8 +1,26 @@
+"use client";
 import React from "react";
 import styles from "./navbar.module.css";
 import Link from "next/link";
 
-export default function Navbar({ isOnline, connectToDevice }) {
+export default function Navbar() {
+    let isConnected = localStorage.getItem("is_connected");
+    const connectToDevice = async () => {
+        try {
+            const response = await fetch("http://192.168.246.165:80/connect", {
+                method: "POST",
+            });
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+
+            console.log("Device Connected");
+            localStorage.setItem("is_connected", "true");
+        } catch (error) {
+            console.error("There was a problem with Connection:", error);
+        }
+    };
     return (
         <div className={styles.main}>
             <div className={styles.wrapper}>
@@ -13,16 +31,16 @@ export default function Navbar({ isOnline, connectToDevice }) {
                     onClick={connectToDevice}
                     className={styles.label}
                     style={{
-                        backgroundColor: isOnline ? "#2ecc71" : "#e74c3c",
+                        backgroundColor: isConnected ? "#2ecc71" : "#e74c3c",
                         cursor: "pointer",
                     }}
                 >
                     <span
                         style={{
-                            color: isOnline ? "#007104" : "#9d0000",
+                            color: isConnected ? "#007104" : "#9d0000",
                         }}
                     >
-                        {isOnline ? "Online" : "Offline"}
+                        {isConnected ? "Online" : "Offline"}
                     </span>
                 </div>
                 <div className={styles.profile}>
