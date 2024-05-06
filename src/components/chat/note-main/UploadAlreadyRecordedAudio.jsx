@@ -4,12 +4,28 @@ import React, { useState } from "react";
 import styles from "./new-note.module.css";
 import { noteConfig } from "../../../../apiConfig";
 
-export default function UploadAlreadyRecordedAudio() {
+export default function UploadAlreadyRecordedAudio({ id }) {
     const [file, setFile] = useState(null);
     const [data, setData] = useState([]);
 
-    const handleFileChange = (event) => {
-        setFile(event.target.files[0]);
+    const convertAudioToText = () => {
+        noteConfig
+            .get("convert-audio-to-text-and-summarize/" + id)
+            .then((res) => {
+                console.log(res);
+                const { status_code, data } = res.data;
+                if (status_code === 6000) {
+                    setNote(data);
+                }
+                uploadingStatus();
+                redirect("/note?pt=notes&id=" + note.id);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally((err) => {
+                // setLoading(false);
+            });
     };
 
     const uploadingStatus = async () => {
@@ -58,34 +74,13 @@ export default function UploadAlreadyRecordedAudio() {
     };
 
     const handleUpload = async () => {
-        if (!file) return;
-
-        const formData = new FormData();
-        formData.append("audio_file", file);
-
-        try {
-            uploadingStatus();
-            const response = await noteConfig.post("upload-audio/", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-            console.log("File uploaded successfully:", response.data);
-            // redirect("/note?pt=notes&id=" + response.data.data.id);
-            setData(response.data);
-            uploadedStatus();
-
-            // handle success
-        } catch (error) {
-            console.error("Error uploading file:", error);
-            // handle error
-        }
+        convertAudioToText();
     };
 
     return (
         <div className={styles.main}>
             <div className={styles.content}>
-                <div
+                {/* <div
                     className={styles.box}
                     style={{
                         width: "49%",
@@ -115,12 +110,12 @@ export default function UploadAlreadyRecordedAudio() {
                             src={"icons/rec.svg"}
                         />
                     </div>
-                    <h3 className={styles.text}>Already uploaded file</h3>
-                </div>
+                    <h3 className={styles.text}>Upload file</h3>
+                </div> */}
                 <div
                     className={styles.box}
                     style={{
-                        width: "49%",
+                        width: "100%",
                     }}
                     onClick={handleUpload}
                 >

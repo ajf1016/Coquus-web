@@ -85,7 +85,7 @@ export default function RecordAndUploadPC() {
     return (
         <div className={styles.main}>
             <div className={styles.content}>
-                {/* <div
+                <div
                     className={styles.box}
                     style={{
                         width: "49%",
@@ -115,12 +115,12 @@ export default function RecordAndUploadPC() {
                             src={"icons/rec.svg"}
                         />
                     </div>
-                    <h3 className={styles.text}>Upload file</h3>
-                </div> */}
+                    <h3 className={styles.text}>Already uploaded file</h3>
+                </div>
                 <div
                     className={styles.box}
                     style={{
-                        width: "100%",
+                        width: "49%",
                     }}
                     onClick={handleUpload}
                 >

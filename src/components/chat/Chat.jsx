@@ -13,26 +13,6 @@ export default function Chat() {
     const id = searchParams.get("id");
     const type = searchParams.get("type");
 
-    // const connectToDevice = async () => {
-    //     try {
-    //         const response = await fetch("http://192.168.246.165:80/connect", {
-    //             method: "POST",
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error("Network response was not ok");
-    //         }
-
-    //         // Handle success, if needed
-    //         console.log("Device Connected");
-    //         setIsOnline(true);
-    //     } catch (error) {
-    //         console.error("There was a problem with Connection:", error);
-    //         setIsOnline(false);
-    //     }
-    // };
-    // useEffect(() => connectToDevice, []);
-
     return (
         <div
             className="main"
@@ -54,7 +34,13 @@ export default function Chat() {
                     height: "100%",
                 }}
             >
-                <ChatAside setRefresh={setRefresh} />
+                <ChatAside
+                    setRefresh={setRefresh}
+                    pt={pt}
+                    id={id}
+                    type={type}
+                    refresh={refresh}
+                />
                 <ChatMain pt={pt} id={id} type={type} refresh={refresh} />
             </div>
         </div>

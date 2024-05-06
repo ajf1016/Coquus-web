@@ -2,32 +2,53 @@
 import React, { useEffect, useState } from "react";
 import styles from "./note-main.module.css";
 import NewNote from "./NewNote";
-import UploadAlreadyRecordedAudio from "./RecordAndUploadPC";
-import { noteConfig } from "../../../../apiConfig";
-import RecordAndUploadLaptop from "./RecordAndUploadPC";
+// import UploadAlreadyRecordedAudio from "./RecordAndUploadPC";
+import { noteConfig, serverConfig } from "../../../../apiConfig";
 import RecordAndUploadPC from "./RecordAndUploadPC";
 import RecordAndUploadESP32 from "./RecordAndUploadESP32";
+import { redirect } from "next/navigation";
+import UploadAlreadyRecordedAudio from "./UploadAlreadyRecordedAudio";
+import { createLCDData } from "@/utils/helper";
 
-export default function NoteMain({ pt, id, type, refresh }) {
+export default function NoteMain({ pt, id, type }) {
     const [note, setNote] = useState([]);
     const [mode, setMode] = useState("summary");
     const [isLoading, setLoading] = useState(true);
     const fetchNotes = () => {
-        noteConfig
-            .get("get-single-note/" + id + "/")
-            .then((res) => {
-                console.log(res);
-                const { status_code, data } = res.data;
-                if (status_code === 6000) {
-                    setNote(data);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-            .finally((err) => {
-                setLoading(false);
-            });
+        if (pt === "new" && type === "upload-already-recorded-audio" && id) {
+            // noteConfig
+            //     .get("convert-audio-to-text-and-summarize/" + id)
+            //     .then((res) => {
+            //         console.log(res);
+            //         const { status_code, data } = res.data;
+            //         if (status_code === 6000) {
+            //             setNote(data);
+            //         }
+            //         redirect("/note?pt=notes&id=" + note.id);
+            //     })
+            //     .catch((err) => {
+            //         console.log(err);
+            //     })
+            //     .finally((err) => {
+            //         setLoading(false);
+            //     });
+        } else {
+            noteConfig
+                .get("get-single-note/" + id + "/")
+                .then((res) => {
+                    console.log(res);
+                    const { status_code, data } = res.data;
+                    if (status_code === 6000) {
+                        setNote(data);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+                .finally((err) => {
+                    setLoading(false);
+                });
+        }
     };
     useEffect(() => {
         setLoading(true);
@@ -38,7 +59,7 @@ export default function NoteMain({ pt, id, type, refresh }) {
         if (pt === "new" && type === "null") {
             return <NewNote />;
         } else if (pt === "new" && type === "upload-already-recorded-audio") {
-            return <UploadAlreadyRecordedAudio />;
+            return <UploadAlreadyRecordedAudio id={id} />;
         } else if (pt === "new" && type === "record-and-upload-esp32") {
             return <RecordAndUploadESP32 />;
         } else if (pt === "new" && type === "record-and-upload-pc") {
