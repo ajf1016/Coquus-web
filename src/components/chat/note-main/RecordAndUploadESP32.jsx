@@ -2,84 +2,47 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import styles from "./new-note.module.css";
-import { noteConfig } from "../../../../apiConfig";
+import { noteConfig, serverConfig } from "../../../../apiConfig";
+import { updateEsp32Status } from "@/utils/helper";
 
 export default function RecordAndUploadESP32() {
-    const [file, setFile] = useState(null);
-    const [data, setData] = useState([]);
-
-    const handleFileChange = (event) => {
-        setFile(event.target.files[0]);
+    const [note, setNote] = useState([]);
+    const startRecording = () => {
+        serverConfig
+            .post("start-recording")
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
-    const uploadingStatus = async () => {
-        try {
-            const response = await fetch(
-                "http://192.168.246.165:80/uploading",
-                {
-                    method: "POST",
+    const convertAudioToText = () => {
+        updateEsp32Status("Generating note..");
+        noteConfig
+            .get("convert-audio-to-text-and-summarize/" + 112)
+            .then((res) => {
+                console.log(res);
+                const { status_code, data } = res.data;
+                if (status_code === 6000) {
+                    setNote(data);
+                    console.log("done generating");
+                    updateEsp32Status("Note Genereated...");
+                    updateEsp32Status("Note: " + note?.summary);
+                    if (note?.id)
+                        window.location.href = "/note?pt=notes&id=" + note?.id;
+                } else {
+                    updateEsp32Status("Somthing went wrong");
                 }
-            );
-
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-
-            // Handle success, if needed
-            console.log("Recording started successfully");
-        } catch (error) {
-            console.error(
-                "There was a problem with the fetch operation:",
-                error
-            );
-        }
-    };
-    const uploadedStatus = async () => {
-        try {
-            const response = await fetch("http://192.168.246.165:80/uploaded", {
-                method: "POST",
-            });
-
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-
-            // Handle success, if needed
-            console.log("Recording uploaded successfully");
-        } catch (error) {
-            console.error(
-                "There was a problem with the fetch operation:",
-                error
-            );
-        } finally {
-            window.location.href = "/note?pt=notes&id=" + data?.data?.id;
-            console.log(data.data.id);
-        }
-    };
-
-    const handleUpload = async () => {
-        if (!file) return;
-
-        const formData = new FormData();
-        formData.append("audio_file", file);
-
-        try {
-            uploadingStatus();
-            const response = await noteConfig.post("upload-audio/", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-            console.log("File uploaded successfully:", response.data);
-            // redirect("/note?pt=notes&id=" + response.data.data.id);
-            setData(response.data);
-            uploadedStatus();
-
-            // handle success
-        } catch (error) {
-            console.error("Error uploading file:", error);
-            // handle error
-        }
+                console.log(note);
+                console.log(data);
+            })
+            .catch((err) => {
+                updateEsp32Status("Failed...");
+                console.log(err);
+            })
+            .finally((err) => {});
     };
 
     return (
@@ -91,21 +54,8 @@ export default function RecordAndUploadESP32() {
                         width: "49%",
                         position: "relative",
                     }}
+                    onClick={startRecording}
                 >
-                    {/* <input
-                        type="file"
-                        onChange={handleFileChange}
-                        style={{
-                            visibility: "none",
-                            // display: "none",
-                            position: "absolute",
-                            top: "0",
-                            left: "0",
-                            width: "100%",
-                            height: "100%",
-                            cursor: "pointer",
-                        }}
-                    /> */}
                     <div className={styles.icon}>
                         <Image
                             width={10}
@@ -122,7 +72,7 @@ export default function RecordAndUploadESP32() {
                     style={{
                         width: "49%",
                     }}
-                    onClick={handleUpload}
+                    onClick={convertAudioToText}
                 >
                     <div className={styles.icon}>
                         <Image

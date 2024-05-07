@@ -5,5 +5,12 @@ export const createLCDData = (inputString) => {
 };
 
 export const updateEsp32Status = (value) => {
-    serverConfig.post("Note: " + createLCDData(value));
+    serverConfig
+        .post(createLCDData(value))
+        .then((res) => {
+            return 200;
+        })
+        .catch((err) => {
+            return 500;
+        });
 };

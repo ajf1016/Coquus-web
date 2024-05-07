@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import styles from "./new-note.module.css";
 import { noteConfig } from "../../../../apiConfig";
+import { updateEsp32Status } from "@/utils/helper";
 
 export default function RecordAndUploadPC() {
     const [file, setFile] = useState(null);
@@ -12,74 +13,51 @@ export default function RecordAndUploadPC() {
         setFile(event.target.files[0]);
     };
 
-    const uploadingStatus = async () => {
-        try {
-            const response = await fetch(
-                "http://192.168.246.165:80/uploading",
-                {
-                    method: "POST",
-                }
-            );
-
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-
-            // Handle success, if needed
-            console.log("Recording started successfully");
-        } catch (error) {
-            console.error(
-                "There was a problem with the fetch operation:",
-                error
-            );
-        }
-    };
-    const uploadedStatus = async () => {
-        try {
-            const response = await fetch("http://192.168.246.165:80/uploaded", {
-                method: "POST",
-            });
-
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-
-            // Handle success, if needed
-            console.log("Recording uploaded successfully");
-        } catch (error) {
-            console.error(
-                "There was a problem with the fetch operation:",
-                error
-            );
-        } finally {
-            window.location.href = "/note?pt=notes&id=" + data?.data?.id;
-            console.log(data.data.id);
-        }
-    };
-
     const handleUpload = async () => {
         if (!file) return;
-
         const formData = new FormData();
         formData.append("audio_file", file);
-
-        try {
-            uploadingStatus();
-            const response = await noteConfig.post("upload-audio/", formData, {
+        noteConfig
+            .post("upload-audio/", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
+            })
+            .then((res) => {
+                const { status_code, data } = res.data;
+                console.log("AUDIO", data, status_code);
+                if (status_code === 6000) {
+                    updateEsp32Status("Audio uploaded from PC");
+                    convertAudioToText(data.id);
+                } else {
+                    updateEsp32Status("Somthing went wrong");
+                }
+            })
+            .catch((err) => {
+                updateEsp32Status("Error: " + err);
             });
-            console.log("File uploaded successfully:", response.data);
-            // redirect("/note?pt=notes&id=" + response.data.data.id);
-            setData(response.data);
-            uploadedStatus();
+    };
 
-            // handle success
-        } catch (error) {
-            console.error("Error uploading file:", error);
-            // handle error
-        }
+    const convertAudioToText = (id) => {
+        updateEsp32Status("Generating note..");
+        noteConfig
+            .get("convert-audio-to-text-and-summarize/" + id)
+            .then((res) => {
+                console.log(res);
+                const { status_code, data } = res.data;
+                updateEsp32Status("Note Genereated...");
+                if (status_code === 6000) {
+                    setData(data);
+                    updateEsp32Status("Note: " + data?.summary);
+                    window.location.href = "/note?pt=notes&id=" + data?.id;
+                } else {
+                    updateEsp32Status("Somthing went wrong");
+                }
+            })
+            .catch((err) => {
+                updateEsp32Status("Failed: " + err);
+                console.log(err);
+            });
     };
 
     return (

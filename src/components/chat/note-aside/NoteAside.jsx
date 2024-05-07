@@ -81,7 +81,9 @@ export default function ChatAside({ setRefresh, pt, id, type, refresh }) {
                             onClick={() =>
                                 setRefresh(
                                     Math.random(),
-                                    updateEsp32Status(note.summary)
+                                    updateEsp32Status(
+                                        "Note: " + note.summary.substring(0, 30)
+                                    )
                                 )
                             }
                         >

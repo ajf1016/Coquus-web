@@ -32,7 +32,7 @@ export default function NoteMain({ pt, id, type }) {
             //     .finally((err) => {
             //         setLoading(false);
             //     });
-        } else {
+        } else if (pt !== "new") {
             noteConfig
                 .get("get-single-note/" + id + "/")
                 .then((res) => {
@@ -40,6 +40,7 @@ export default function NoteMain({ pt, id, type }) {
                     const { status_code, data } = res.data;
                     if (status_code === 6000) {
                         setNote(data);
+                        updateEsp32Status("Note: " + data.summary);
                     }
                 })
                 .catch((err) => {

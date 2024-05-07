@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import styles from "./new-note.module.css";
 import { noteConfig } from "../../../../apiConfig";
+import { updateEsp32Status } from "@/utils/helper";
 
 export default function UploadAlreadyRecordedAudio({ id }) {
     const [file, setFile] = useState(null);
@@ -15,10 +16,10 @@ export default function UploadAlreadyRecordedAudio({ id }) {
                 console.log(res);
                 const { status_code, data } = res.data;
                 if (status_code === 6000) {
-                    setNote(data);
+                    setData(data);
                 }
-                uploadingStatus();
-                redirect("/note?pt=notes&id=" + note.id);
+                updateEsp32Status("Converting");
+                window.location.href = "/note?pt=notes&id=" + data.id;
             })
             .catch((err) => {
                 console.log(err);
@@ -26,51 +27,6 @@ export default function UploadAlreadyRecordedAudio({ id }) {
             .finally((err) => {
                 // setLoading(false);
             });
-    };
-
-    const uploadingStatus = async () => {
-        try {
-            const response = await fetch(
-                "http://192.168.246.165:80/uploading",
-                {
-                    method: "POST",
-                }
-            );
-
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-
-            // Handle success, if needed
-            console.log("Recording started successfully");
-        } catch (error) {
-            console.error(
-                "There was a problem with the fetch operation:",
-                error
-            );
-        }
-    };
-    const uploadedStatus = async () => {
-        try {
-            const response = await fetch("http://192.168.246.165:80/uploaded", {
-                method: "POST",
-            });
-
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-
-            // Handle success, if needed
-            console.log("Recording uploaded successfully");
-        } catch (error) {
-            console.error(
-                "There was a problem with the fetch operation:",
-                error
-            );
-        } finally {
-            window.location.href = "/note?pt=notes&id=" + data?.data?.id;
-            console.log(data.data.id);
-        }
     };
 
     const handleUpload = async () => {

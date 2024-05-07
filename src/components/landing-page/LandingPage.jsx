@@ -2,18 +2,13 @@
 import React, { useEffect } from "react";
 import styles from "./landing-page.module.css";
 import Link from "next/link";
+import { updateEsp32Status } from "@/utils/helper";
 
 export default function LandingPage() {
     localStorage.setItem("is_connected", "false");
     const connectToDevice = async () => {
         try {
-            const response = await fetch("http://192.168.246.165:80/connect", {
-                method: "POST",
-            });
-
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
+            updateEsp32Status("connect");
 
             console.log("Device Connected");
             localStorage.setItem("is_connected", "true");
@@ -30,7 +25,7 @@ export default function LandingPage() {
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Molestiae, dicta.
                 </p>
-                <Link href="/note" className={styles.button}>
+                <Link href="/note?pt=new&type=null" className={styles.button}>
                     Get Started
                 </Link>
             </div>
