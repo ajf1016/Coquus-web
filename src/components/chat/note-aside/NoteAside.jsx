@@ -60,13 +60,16 @@ export default function ChatAside({ setRefresh, pt, id, type, refresh }) {
                             className={styles.chat_item}
                             onClick={() => setRefresh(Math.random())}
                         >
-                            <audio controls>
+                            {/* <audio controls>
                                 <source
                                     src={note.audio_file}
                                     type="audio/mpeg"
                                 />
                                 Your browser does not support the audio element.
-                            </audio>
+                            </audio> */}
+                            <h3 className={styles.name}>
+                                {note.name + ".mp3"}
+                            </h3>
                         </Link>
                     ))}
                 </div>

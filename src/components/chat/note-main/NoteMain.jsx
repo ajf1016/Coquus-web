@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
 import UploadAlreadyRecordedAudio from "./UploadAlreadyRecordedAudio";
 import { createLCDData } from "@/utils/helper";
 
-export default function NoteMain({ pt, id, type }) {
+export default function ChatMain({ pt, id, type }) {
     const [note, setNote] = useState([]);
     const [mode, setMode] = useState("summary");
     const [isLoading, setLoading] = useState(true);
@@ -88,9 +88,10 @@ export default function NoteMain({ pt, id, type }) {
                                 style={{
                                     backgroundColor:
                                         mode === "raw"
-                                            ? "#030637"
+                                            ? "#f7f7f7"
                                             : "transparent",
-                                    color: mode === "raw" ? "#fff" : "#030637",
+                                    color:
+                                        mode === "raw" ? "#030637" : "#f7f7f7",
                                 }}
                             >
                                 Raw
@@ -100,10 +101,12 @@ export default function NoteMain({ pt, id, type }) {
                                 style={{
                                     backgroundColor:
                                         mode === "summary"
-                                            ? "#030637"
+                                            ? "#f7f7f7"
                                             : "transparent",
                                     color:
-                                        mode === "summary" ? "#fff" : "#030637",
+                                        mode === "summary"
+                                            ? "#030637"
+                                            : "#f7f7f7",
                                 }}
                             >
                                 Summary

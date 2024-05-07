@@ -1,5 +1,5 @@
 :root {
-    --bg-color: #030637;
+    --bg-color: #f7f7f7;
 }
 
 * {
@@ -15,7 +15,7 @@ body {
 }
 
 body {
-    background: #030637;
+    background: #f7f7f7;
 }
 
 a {

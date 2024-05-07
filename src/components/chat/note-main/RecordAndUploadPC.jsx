@@ -8,6 +8,7 @@ import { updateEsp32Status } from "@/utils/helper";
 export default function RecordAndUploadPC() {
     const [file, setFile] = useState(null);
     const [data, setData] = useState([]);
+    const [statusText, setStatusText] = useState("...");
 
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
@@ -17,6 +18,7 @@ export default function RecordAndUploadPC() {
         if (!file) return;
         const formData = new FormData();
         formData.append("audio_file", file);
+        setStatusText("Audio Uploading...");
         noteConfig
             .post("upload-audio/", formData, {
                 headers: {
@@ -28,30 +30,36 @@ export default function RecordAndUploadPC() {
                 console.log("AUDIO", data, status_code);
                 if (status_code === 6000) {
                     updateEsp32Status("Audio uploaded from PC");
+                    setStatusText("Audio Uplaoaded Successfully");
                     convertAudioToText(data.id);
                 } else {
                     updateEsp32Status("Somthing went wrong");
+                    setStatusText("Somthing went wrong");
                 }
             })
             .catch((err) => {
                 updateEsp32Status("Error: " + err);
+                setStatusText("Error: " + err);
             });
     };
 
     const convertAudioToText = (id) => {
         updateEsp32Status("Generating note..");
+        setStatusText("Generating note..");
         noteConfig
             .get("convert-audio-to-text-and-summarize/" + id)
             .then((res) => {
                 console.log(res);
                 const { status_code, data } = res.data;
                 updateEsp32Status("Note Genereated...");
+                setStatusText("Note Genereated...");
                 if (status_code === 6000) {
                     setData(data);
                     updateEsp32Status("Note: " + data?.summary);
                     window.location.href = "/note?pt=notes&id=" + data?.id;
                 } else {
                     updateEsp32Status("Somthing went wrong");
+                    setStatusText("Somthing went wrong");
                 }
             })
             .catch((err) => {
@@ -93,7 +101,8 @@ export default function RecordAndUploadPC() {
                             src={"icons/rec.svg"}
                         />
                     </div>
-                    <h3 className={styles.text}>Already uploaded file</h3>
+                    <h3 className={styles.text}>Select File</h3>
+                    <h3 className={styles.description}>MP3/WAV</h3>
                 </div>
                 <div
                     className={styles.box}
@@ -112,6 +121,7 @@ export default function RecordAndUploadPC() {
                         />
                     </div>
                     <h3 className={styles.text}>Convert into note</h3>
+                    <h3 className={styles.description}>{statusText}</h3>
                 </div>
             </div>
         </div>

@@ -7,6 +7,7 @@ import { updateEsp32Status } from "@/utils/helper";
 
 export default function RecordAndUploadESP32() {
     const [note, setNote] = useState([]);
+    const [statusText, setStatusText] = useState("...");
     const startRecording = () => {
         serverConfig
             .post("start-recording")
@@ -20,6 +21,7 @@ export default function RecordAndUploadESP32() {
 
     const convertAudioToText = () => {
         updateEsp32Status("Generating note..");
+        setStatusText("Generating note..");
         noteConfig
             .get("convert-audio-to-text-and-summarize/" + 112)
             .then((res) => {
@@ -29,17 +31,22 @@ export default function RecordAndUploadESP32() {
                     setNote(data);
                     console.log("done generating");
                     updateEsp32Status("Note Genereated...");
-                    updateEsp32Status("Note: " + note?.summary);
-                    if (note?.id)
+                    setStatusText("Note Genereated...");
+
+                    if (note?.id) {
+                        updateEsp32Status("Note: " + note?.summary);
                         window.location.href = "/note?pt=notes&id=" + note?.id;
+                    }
                 } else {
                     updateEsp32Status("Somthing went wrong");
+                    setStatusText("Somthing went wrong");
                 }
                 console.log(note);
                 console.log(data);
             })
             .catch((err) => {
                 updateEsp32Status("Failed...");
+                setStatusText("Error: " + err);
                 console.log(err);
             })
             .finally((err) => {});
@@ -66,6 +73,7 @@ export default function RecordAndUploadESP32() {
                         />
                     </div>
                     <h3 className={styles.text}>Start Recording</h3>
+                    <h3 className={styles.description}>Recording from ESP32</h3>
                 </div>
                 <div
                     className={styles.box}
@@ -84,6 +92,7 @@ export default function RecordAndUploadESP32() {
                         />
                     </div>
                     <h3 className={styles.text}>Convert into note</h3>
+                    <h3 className={styles.description}>{statusText}</h3>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 .main {
-    background: #030637;
-    border-right: 1px solid rgba(255, 255, 255, 0.335);
+    background: #f7f7f7;
+    border-right: 3px solid #03063724;
     width: 25%;
     height: 100%;
     padding: 20px;
@@ -10,12 +10,12 @@
     font-weight: 500;
     padding: 10px 20px;
     border-radius: 6px;
-    background: #fff;
+    background: #030637;
     width: 100%;
     display: block;
     margin-bottom: 20px;
     cursor: pointer;
-    color: #030637;
+    color: #f7f7f7;
     text-align: center;
 }
 .chat_items {
@@ -23,17 +23,24 @@
 .chat_item {
     padding: 14px 20px;
     border-radius: 6px;
-    background: #484eb0;
+    background-color: #fff;
+    border: 2px solid #030637;
+    color: #030637;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
     cursor: pointer;
+    transition: all 0.3s;
+}
+.chat_item:hover {
+    background-color: #0306371b;
+    transform: translateY(-5px);
 }
 .name {
     font-size: 18px;
-    font-weight: 100;
+    font-weight: 300;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

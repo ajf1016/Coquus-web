@@ -1,6 +1,6 @@
 .main {
-    background: #030637;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.335);
+    background: #f7f7f7;
+    border-bottom: 3px solid #03063724;
     padding: 15px 0;
 }
 .wrapper {
@@ -9,7 +9,7 @@
     align-items: center;
     max-width: 1400px;
     margin: 0 auto;
-    color: #fff;
+    color: #030637;
 }
 .logo {
     font-size: 25px;
@@ -34,8 +34,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
-    color: #030637;
+    background-color: #030637;
+    color: #f7f7f7;
     border-radius: 50%;
 }
 .name {

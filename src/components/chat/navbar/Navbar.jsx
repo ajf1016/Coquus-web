@@ -44,7 +44,7 @@ export default function Navbar() {
                     </span>
                 </div>
                 <div className={styles.profile}>
-                    <div className={styles.name}>Ajmal Fayiz</div>
+                    {/* <div className={styles.name}>Ajmal Fayiz</div> */}
                     <div className={styles.avatar}>
                         <span>A</span>
                     </div>

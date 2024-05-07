@@ -22,8 +22,7 @@ export default function LandingPage() {
             <div className={styles.wrapper}>
                 <h3 className={styles.logo}>Coquus.</h3>
                 <p className={styles.text}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Molestiae, dicta.
+                    Transforming speech into actionable insights...
                 </p>
                 <Link href="/note?pt=new&type=null" className={styles.button}>
                     Get Started
