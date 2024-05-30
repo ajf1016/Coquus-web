@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Voice-to-Text Summarizer Web App
 
-## Getting Started
+This project is a web application for a voice-to-text summarizer that converts audio to text using Whisper and summarizes the text using Gemini LLM. The backend is built with Django and provides a REST API, while the frontend is built using Next.js.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Overview](#overview)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Overview
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+The Voice-to-Text Summarizer Web App allows users to upload audio files, which are then processed to convert speech to text and summarized. The application provides an easy-to-use interface for interacting with the backend services.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Features
 
-## Learn More
+- **Audio to Text Conversion**: Utilizes Whisper to accurately transcribe audio files into text.
+- **Text Summarization**: Leverages Gemini LLM to generate concise and informative summaries of the transcribed text.
+- **User-Friendly Interface**: Built with Next.js to provide a responsive and intuitive user experience.
+- **REST API Integration**: Connects with a Django backend to handle audio processing and text summarization.
 
-To learn more about Next.js, take a look at the following resources:
+## Technologies Used
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Next.js**: Frontend framework for building the web application.
+- **Whisper**: For converting audio to text.
+- **Gemini LLM**: For summarizing the transcribed text.
+- **Django**: As the backend framework.
+- **Django REST framework**: For building the REST API.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Installation
 
-## Deploy on Vercel
+To get a local copy up and running, follow these steps.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Prerequisites
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Node.js
+- npm or yarn
+
+### Installation Steps
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/yourusername/voice-to-text-nextjs.git
+   cd voice-to-text-nextjs
